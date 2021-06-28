@@ -1,0 +1,41 @@
+body {
+    font:14px arial;
+    text-align:center;
+  }
+  
+  #container {
+    margin-top:15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  #logo {
+    float:left;
+    width:130px;
+    padding-top: 40px;
+  }
+  
+  div.conteudo{
+    width: 500px;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+
+  div.titulo {
+    font:20px arial;
+    font-weight:bold;
+    margin-bottom:5px;
+  }
+  
+  div.subtitulo {
+    font:15px arial;
+    font-style:italic;
+    margin-bottom:10px;
+  }
+  
+  div.campo {
+    margin-bottom:5px;
+    text-align:right;
+  }

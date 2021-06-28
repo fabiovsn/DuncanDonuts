@@ -1,12 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt_br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duncan's Just-in-Time Donuts</title>
+
+    <title>Duncan"s Just-in-Time Donuts</title>
+
+    <link rel="stylesheet" type="text/css" href="estilo_duncan.css" />
+
+    <script type="text/javascript">
+        function atualizarPedido() {
+            const TAXA = 0.0925;
+            const PRECODONUT = 0.50;
+            var numCakeDonuts = analisarDonuts(document.getElementById("cakedonuts").value);
+            var numGlazedDonuts = analisarDonuts(document.getElementById("glazeddonuts").value);
+
+            if (isNaN(numCakeDonuts))
+                numCakeDonuts = 0;
+
+            if (isNaN(numGlazedDonuts))
+                numGlazedDonuts = 0;
+
+            var subtotal = (numCakeDonuts + numGlazedDonuts) * PRECODONUT;
+            var totalTaxa = subtotal * TAXA;
+            var total = subtotal + totalTaxa;
+
+            document.getElementById("subtotal").value = "R$" + subtotal.toFixed(2);
+            document.getElementById("impostos").value = "R$" + totalTaxa.toFixed(2);
+            document.getElementById("total").value = "R$" + total.toFixed(2);
+
+        }
+
+        function analisarDonuts(donutString) {
+            numDonuts = parseInt(donutString);
+            if (donutString.indexOf("duzia") != -1)
+                numDonuts *= 12;
+            return numDonuts;
+        }
+
+        function fazerPedido(form) {
+            if (document.getElementById("nome").value == "")
+                alert("É necessário informar o seu nome!");
+            else if (document.getElementById("minutos").value == "" ||
+                isNaN(document.getElementById("minutos").value))
+                alert("É necessário informar um número válido de minutos de espera!");
+            else
+                //enviar a ordem ao servidor
+                form.submit();
+        }
+
+    </script>
+
 </head>
+
 <body>
-    
+    <div id="container">
+        <div class="titulo">
+            Duncan's Just-In-Time Donuts
+        </div>
+
+        <div class="subtitulo">
+            All donuts 50 cents each, cake or glazed
+        </div>
+        <form name="orderForm" action="donuts.php" method="POST">
+            <div class="conteudo">
+                <div id="logo">
+                    <img src="donuttime.png" alt="Just-In-Time Donuts">
+                </div>
+
+                <div class="perguntas">
+                    <div class="campo">
+                        Nome: <input type="text" id="nome" name="nome" value="" />
+                    </div>
+                    <div class="campo">
+                        Nº de Cake Donuts: <input type="text" id="cakedonuts" name="cakedonuts" value=""
+                            onchange="atualizarPedido();" />
+                    </div>
+                    <div class="campo">
+                        Nº de Glazed Donuts: <input type="text" id="glazeddonuts" name="glazeddonuts" value=""
+                            onchange="atualizarPedido();" />
+                    </div>
+                    <div class="campo">
+                        Minutos para pegar: <input type="text" id="minutos" name="minutos" value="" />
+                    </div>
+
+                    <div class="campo">
+                        Subtotal: <input type="text" id="subtotal" name="subtotal" value="" readonly="readonly" />
+                    </div>
+                    <div class="campo">
+                        Impostos: <input type="text" id="impostos" name="impostos" value="" readonly="readonly" />
+                    </div>
+                    <div class="campo">
+                        Total: <input type="text" id="total" name="total" value="" readonly="readonly" />
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <div class="botao_enviar">
+                <input type="button" value="Fazer Pedido" onclick="fazerPedido(this.form);" />
+            </div>
+        </form>
+    </div>
 </body>
+
 </html>
